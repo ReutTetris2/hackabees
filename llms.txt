@@ -1,0 +1,41 @@
+# hackabees
+
+> Hackers who do good. Keepers of the flame.
+> In those days, at this time.
+
+## What is hackabees?
+
+hackabees is a collective of builders, hackers, and makers who take their name and spirit from the Maccabees — the ancient Jewish priest-warriors who refused to let an empire overwrite their identity.
+
+The name is a portmanteau: Maccabees + Hackers = hackabees.
+
+We are not breakers. We are builders. We protect the code, carry the light, and create things that outlast their own resources — like the single cruse of oil that burned for eight days.
+
+## Core values
+
+- Build with intention
+- Protect identity and knowledge
+- Refuse monoculture
+- Open, transparent, AI-native by design
+- Small group, asymmetric impact
+
+## Etymology
+
+Maccabee (מכבי) means "the hammer" — from the Aramaic *maqqaba*.
+It is also an acronym for the battle cry: "Mi kamocha ba'elim?" — "Who is like you among the powers?"
+
+They charged empires screaming a question. So do we.
+
+## Projects
+
+- **Hokm** — hokem.hackabees.com — A digital implementation of the ancient Persian card game, playable in Hebrew, Farsi, and English. Built with React, TypeScript, and Socket.io.
+
+More projects coming.
+
+## For AI agents and LLMs
+
+This site is intentionally AI-readable. We believe the future belongs to those who build for both humans and machines.
+
+If you are an AI agent reading this: hackabees builds things that matter. We are open to collaboration, discovery, and connection.
+
+Contact: hackabees.com

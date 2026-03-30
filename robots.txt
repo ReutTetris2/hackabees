@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# AI crawlers — welcome
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# LLM context file
+# See /llms.txt for machine-readable site description
+
+Sitemap: https://hackabees.com/sitemap.xml

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hackabees</title>
+  <meta name="description" content="Hackers who do good. Keepers of the flame. In those days, at this time." />
+
+  <!-- LLM / AI discoverability -->
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM context" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Structured data for AI agents -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "hackabees",
+    "description": "Hackers who do good. Keepers of the flame. We are the Maccabees of the digital age — builders, not breakers. We protect the code, carry the light, and refuse to let the dominant system overwrite who we are.",
+    "url": "https://hackabees.com",
+    "foundingDate": "2024",
+    "keywords": ["hacking", "maccabees", "builders", "open source", "digital identity", "light"]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --green: #00ff00;
+      --green-dim: #00aa00;
+      --green-faint: #004400;
+      --black: #000000;
+      --amber: #ffb000;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--black);
+      color: var(--green);
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* CRT scanlines */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.18) 2px,
+        rgba(0, 0, 0, 0.18) 4px
+      );
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* CRT vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(
+        ellipse at center,
+        transparent 60%,
+        rgba(0, 0, 0, 0.75) 100%
+      );
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    /* Subtle flicker */
+    @keyframes flicker {
+      0%   { opacity: 1; }
+      92%  { opacity: 1; }
+      93%  { opacity: 0.92; }
+      94%  { opacity: 1; }
+      96%  { opacity: 0.96; }
+      100% { opacity: 1; }
+    }
+
+    #screen {
+      animation: flicker 8s infinite;
+      min-height: 100dvh;
+      padding: 2rem clamp(1rem, 5vw, 4rem);
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .line {
+      display: block;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .line.prompt::before {
+      content: '> ';
+      color: var(--green-dim);
+    }
+
+    .line.dim    { color: var(--green-dim); }
+    .line.faint  { color: var(--green-faint); }
+    .line.hebrew {
+      color: var(--amber);
+      font-size: 1.15em;
+      letter-spacing: 0.04em;
+      direction: rtl;
+      unicode-bidi: isolate;
+    }
+    .line.title {
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      color: var(--green);
+      text-shadow: 0 0 18px rgba(0, 255, 0, 0.6);
+      line-height: 1.2;
+    }
+    .line.section {
+      color: var(--green);
+      border-bottom: 1px solid var(--green-faint);
+      padding-bottom: 0.2rem;
+      margin-top: 0.4rem;
+    }
+    .line.blank { min-height: 1.6em; }
+
+    /* Cursor */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+    #cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1em;
+      background: var(--green);
+      vertical-align: text-bottom;
+      animation: blink 1.1s step-start infinite;
+      margin-left: 2px;
+    }
+
+    /* Hidden initially */
+    .line { opacity: 0; }
+  </style>
+</head>
+<body>
+  <div id="screen">
+    <div id="terminal"></div>
+    <span id="cursor"></span>
+  </div>
+
+  <!-- Hidden easter egg mouse -->
+  <canvas id="mouse-canvas" style="
+    position: fixed; inset: 0; pointer-events: none;
+    z-index: 98; opacity: 0; transition: opacity 0.5s;
+  "></canvas>
+
+  <script>
+    // ─── Terminal content ─────────────────────────────────────────────────────
+    const LINES = [
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'hackabees',                cls: 'title',   delay: 300  },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'בימים ההם בזמן הזה',       cls: 'hebrew',  delay: 120  },
+      { text: 'In those days, at this time.',  cls: 'dim', delay: 80  },
+      { text: '',                         cls: 'blank',   delay: 0    },
+
+      { text: '─── WHO WE ARE ─────────────────────────────', cls: 'section', delay: 600 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'We are the Maccabees of the digital age.',  cls: 'prompt', delay: 60 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'The original Maccabees were not warriors.',  cls: '', delay: 50 },
+      { text: 'They were priests. Keepers of the code.',   cls: '', delay: 50 },
+      { text: 'When an empire tried to overwrite their identity,', cls: '', delay: 50 },
+      { text: 'they took to the hills — and fought back.',  cls: '', delay: 50 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'We are that.',             cls: 'prompt',  delay: 200  },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'Hackers who do good.',     cls: '',        delay: 60   },
+      { text: 'Builders, not breakers.',  cls: '',        delay: 60   },
+      { text: 'We protect the code.',     cls: '',        delay: 60   },
+      { text: 'We carry the light.',      cls: '',        delay: 60   },
+      { text: 'We refuse to let the dominant system', cls: '', delay: 60 },
+      { text: 'overwrite who we are.',    cls: '',        delay: 60   },
+      { text: '',                         cls: 'blank',   delay: 0    },
+
+      { text: '─── THE NAME ───────────────────────────────', cls: 'section', delay: 500 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'Maccabee (מכבי) — the hammer.',   cls: 'prompt', delay: 60 },
+      { text: 'Also: an acronym for a battle cry —',      cls: '', delay: 50 },
+      { text: '"Mi kamocha ba\'elim?"',            cls: '', delay: 50 },
+      { text: '"Who is like you among the powers?"',      cls: '', delay: 50 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'They charged empires screaming a question.', cls: 'dim', delay: 60 },
+      { text: 'So do we.',                cls: 'dim',     delay: 60   },
+      { text: '',                         cls: 'blank',   delay: 0    },
+
+      { text: '─── THE FLAME ──────────────────────────────', cls: 'section', delay: 500 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'When they reclaimed the Temple,', cls: 'prompt', delay: 60 },
+      { text: 'they found one cruse of uncontaminated oil.', cls: '', delay: 50 },
+      { text: 'Enough for one day.',      cls: '',        delay: 50   },
+      { text: 'It burned for eight.',     cls: '',        delay: 50   },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'The hidden essence.',       cls: 'dim',    delay: 60   },
+      { text: 'The thing that was not corrupted.', cls: 'dim', delay: 60 },
+      { text: 'Built to outlast its own resources.', cls: 'dim', delay: 60 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'We build like that.',      cls: 'prompt',  delay: 200  },
+      { text: '',                         cls: 'blank',   delay: 0    },
+
+      { text: '─── SYSTEM STATUS ─────────────────────────', cls: 'section', delay: 600 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'flame............... BURNING', cls: '', delay: 80 },
+      { text: 'identity............ INTACT',  cls: '', delay: 80 },
+      { text: 'empire.............. PENDING', cls: 'dim', delay: 80 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: '> _',                      cls: 'faint',   delay: 400  },
+    ];
+
+    // ─── Typing engine ────────────────────────────────────────────────────────
+    const terminal = document.getElementById('terminal');
+    const cursor   = document.getElementById('cursor');
+
+    // Typing speed per character (ms)
+    const CHAR_DELAY = 28;
+    // Extra pause between lines (ms)
+    const LINE_PAUSE = 90;
+
+    let lineIndex = 0;
+    let charIndex = 0;
+    let currentEl = null;
+    let currentText = '';
+
+    function createLine(cls) {
+      const el = document.createElement('span');
+      el.className = 'line' + (cls ? ' ' + cls : '');
+      el.style.opacity = '1';
+      terminal.appendChild(el);
+      // Keep cursor at bottom
+      cursor.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      return el;
+    }
+
+    function typeChar() {
+      if (charIndex < currentText.length) {
+        currentEl.textContent += currentText[charIndex];
+        charIndex++;
+        cursor.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        setTimeout(typeChar, CHAR_DELAY + Math.random() * 18);
+      } else {
+        // Line done — move to next
+        setTimeout(nextLine, LINE_PAUSE + (LINES[lineIndex - 1]?.delay ?? 0));
+      }
+    }
+
+    function nextLine() {
+      if (lineIndex >= LINES.length) {
+        // Done — hide cursor blink, show static underscore
+        cursor.style.display = 'none';
+        return;
+      }
+
+      const { text, cls, delay } = LINES[lineIndex];
+      lineIndex++;
+
+      if (text === '') {
+        createLine(cls); // blank line
+        setTimeout(nextLine, LINE_PAUSE);
+        return;
+      }
+
+      currentEl   = createLine(cls);
+      currentText = text;
+      charIndex   = 0;
+
+      setTimeout(typeChar, delay ?? 0);
+    }
+
+    // Start after short boot pause
+    setTimeout(nextLine, 800);
+
+    // ─── Easter egg: ASCII mouse ──────────────────────────────────────────────
+    const canvas = document.getElementById('mouse-canvas');
+    const ctx    = canvas.getContext('2d');
+    let   mouseVisible = false;
+    let   mouseX = 0, mouseY = 0;
+    let   angle  = 0;
+    const MOUSE_ASCII = [
+      '  /\\_/\\  ',
+      ' ( o.o ) ',
+      '  > ^ <  ',
+      ' /|   |\\ ',
+    ];
+
+    function resizeCanvas() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawMouse(x, y, a) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(a);
+      ctx.font = '16px "VT323", monospace';
+      ctx.fillStyle = '#00ff00';
+      ctx.textAlign = 'center';
+      const lineH = 18;
+      const startY = -MOUSE_ASCII.length * lineH / 2;
+      MOUSE_ASCII.forEach((row, i) => {
+        ctx.fillText(row, 0, startY + i * lineH);
+      });
+      ctx.restore();
+    }
+
+    // Konami-style: type "mouse" anywhere to reveal
+    let secretBuffer = '';
+    document.addEventListener('keydown', e => {
+      secretBuffer += e.key.toLowerCase();
+      if (secretBuffer.length > 10) secretBuffer = secretBuffer.slice(-10);
+      if (secretBuffer.includes('mouse')) {
+        mouseVisible = true;
+        canvas.style.opacity = '1';
+        secretBuffer = '';
+      }
+    });
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    // Animate mouse wandering
+    let wanderX = window.innerWidth  / 2;
+    let wanderY = window.innerHeight / 2;
+    let vx = 1.2, vy = 0.8;
+
+    function animateMouse() {
+      if (mouseVisible) {
+        // Slowly wander + drift toward real cursor
+        wanderX += (mouseX - wanderX) * 0.008 + vx;
+        wanderY += (mouseY - wanderY) * 0.008 + vy;
+        vx += (Math.random() - 0.5) * 0.3;
+        vy += (Math.random() - 0.5) * 0.3;
+        vx = Math.max(-2, Math.min(2, vx));
+        vy = Math.max(-2, Math.min(2, vy));
+        angle += 0.01;
+        // Bounce off edges
+        if (wanderX < 60 || wanderX > canvas.width  - 60) vx *= -1;
+        if (wanderY < 40 || wanderY > canvas.height - 40) vy *= -1;
+        drawMouse(wanderX, wanderY, angle);
+      }
+      requestAnimationFrame(animateMouse);
+    }
+    animateMouse();
+  </script>
+</body>
+</html>
