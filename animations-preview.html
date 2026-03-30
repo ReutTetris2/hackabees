@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>hackabees — animation preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green: #00ff00;
+      --green-dim: #00aa00;
+      --green-faint: #004400;
+      --black: #000000;
+      --amber: #ffb000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      background: #000;
+      color: var(--green);
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.18) 2px, rgba(0,0,0,0.18) 4px
+      );
+      pointer-events: none; z-index: 100;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.75) 100%);
+      pointer-events: none; z-index: 99;
+    }
+    #screen {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem clamp(1rem, 5vw, 4rem);
+      position: relative; z-index: 1;
+    }
+    .label {
+      font-size: 0.75em;
+      color: var(--green-faint);
+      letter-spacing: 0.12em;
+      border-bottom: 1px solid var(--green-faint);
+      padding-bottom: 0.2rem;
+      margin-top: 2.4rem;
+      margin-bottom: 0.4rem;
+    }
+    .context-line {
+      display: block;
+      color: var(--green-dim);
+      font-size: 0.9em;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    .context-amber { color: var(--amber); }
+    .mount { display: block; }
+  </style>
+</head>
+<body>
+<div id="screen">
+
+  <div class="label">── CONCEPT B: THE HILLS (placement: after WHO WE ARE header) ──</div>
+  <span class="context-line">─── WHO WE ARE ─────────────────────────────</span>
+  <!-- hills mounts here -->
+  <span id="mount-hills" class="mount"></span>
+  <span class="context-line">The decree was specific.</span>
+
+  <div class="label">── CONCEPT A: THE FLAME (placement: before THE FLAME header) ──</div>
+  <!-- flame mounts here -->
+  <span id="mount-flame" class="mount"></span>
+  <span class="context-line">─── THE FLAME ──────────────────────────────</span>
+  <span class="context-line" style="margin-top:0.4rem">The Temple had been made into something else.</span>
+
+  <div class="label">── CONCEPT C: THE MENORAH (placement: after "It burned for eight.") ──</div>
+  <span class="context-line">Enough for one day.</span>
+  <span class="context-line context-amber">It burned for eight.</span>
+  <!-- menorah mounts here -->
+  <span id="mount-menorah" class="mount"></span>
+  <span class="context-line">We build like that.</span>
+
+  <div style="height:4rem"></div>
+</div>
+
+<script src="animations.js"></script>
+<script>
+  // Each init function takes the element it should be placed relative to.
+  // insertAdjacentElement('beforebegin') = before, ('afterend') = after.
+
+  // Concept A: flame appears BEFORE the section header
+  hackabeeAnimations.initFlame(document.getElementById('mount-flame'));
+
+  // Concept B: hills appears AFTER the section header span
+  hackabeeAnimations.initHills(document.getElementById('mount-hills'));
+
+  // Concept C: menorah appears AFTER the "It burned for eight." line
+  hackabeeAnimations.initMenorah(document.getElementById('mount-menorah'));
+</script>
+</body>
+</html>

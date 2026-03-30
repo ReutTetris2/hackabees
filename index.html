@@ -172,6 +172,7 @@
     z-index: 98; opacity: 0; transition: opacity 0.5s;
   "></canvas>
 
+  <script src="animations.js"></script>
   <script>
     // ─── Terminal content ─────────────────────────────────────────────────────
     const LINES = [
@@ -185,7 +186,7 @@
       { text: 'in those days, at this time.', cls: 'dim', delay: 80  },
       { text: '',                         cls: 'blank',   delay: 0    },
 
-      { text: '─── WHO WE ARE ─────────────────────────────', cls: 'section', delay: 600 },
+      { text: '─── WHO WE ARE ─────────────────────────────', cls: 'section', delay: 600, anim: 'hills' },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: 'The decree was specific.',  cls: 'prompt', delay: 60   },
       { text: 'Eat the pig. Work the Sabbath.', cls: '',  delay: 50   },
@@ -223,7 +224,7 @@
       { text: 'They knew. So do we.',     cls: 'amber',   delay: 200  },
       { text: '',                         cls: 'blank',   delay: 0    },
 
-      { text: '─── THE FLAME ──────────────────────────────', cls: 'section', delay: 500 },
+      { text: '─── THE FLAME ──────────────────────────────', cls: 'section', delay: 500, anim: 'flame' },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: 'The Temple had been made into something else.', cls: 'prompt', delay: 60 },
       { text: '',                         cls: 'blank',   delay: 0    },
@@ -232,7 +233,7 @@
       { text: 'The only thing the empire hadn\'t gotten to.', cls: 'dim', delay: 50 },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: 'Enough for one day.',      cls: '',        delay: 60   },
-      { text: 'It burned for eight.',     cls: 'amber',   delay: 300  },
+      { text: 'It burned for eight.',     cls: 'amber',   delay: 300, anim: 'menorah' },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: 'We build like that.',      cls: 'prompt',  delay: 200  },
       { text: '',                         cls: 'blank',   delay: 0    },
@@ -264,6 +265,33 @@
       { text: 'We build like that too.',  cls: 'prompt',  delay: 200  },
       { text: '',                         cls: 'blank',   delay: 0    },
 
+      { text: '─── THE CODE HELD ──────────────────────────', cls: 'section', delay: 600 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'Every empire. Every century. The same answer.', cls: 'prompt', delay: 60 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'Persia — cardamom dough. Menorah off the window.', cls: '', delay: 50 },
+      { text: 'Two civilizations. One fire. Neither won.', cls: 'dim', delay: 50 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'Morocco — copper trays at dawn.',          cls: '', delay: 50 },
+      { text: 'Seventh night: every woman danced for Judith.', cls: 'dim', delay: 50 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'Iraq — built the Talmud in the city of the exile.', cls: '', delay: 50 },
+      { text: 'In the same place it began.',              cls: 'dim', delay: 50 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'Yemen — after the candles,',               cls: '', delay: 50 },
+      { text: 'the women went into the street.',          cls: '', delay: 50 },
+      { text: 'With bells.',              cls: 'amber',   delay: 200  },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'Libya — עאדה.',             cls: '',        delay: 50   },
+      { text: '"I choose to remain inside this line of people."', cls: 'dim', delay: 50 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'Tunisia — 80% Kohanim.',   cls: '',        delay: 50   },
+      { text: 'Carrying a stone from the First Temple.', cls: 'dim', delay: 50 },
+      { text: 'Still holding the priestly blessing.',    cls: 'dim', delay: 50 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'The code held.',           cls: 'prompt',  delay: 300  },
+      { text: '',                         cls: 'blank',   delay: 0    },
+
       { text: '─── SYSTEM STATUS ─────────────────────────', cls: 'section', delay: 600 },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: 'flame.............. BURNING', cls: 'amber', delay: 80 },
@@ -287,6 +315,7 @@
     let charIndex = 0;
     let currentEl = null;
     let currentText = '';
+    let currentAnim = null;
 
     function createLine(cls) {
       const el = document.createElement('span');
@@ -305,7 +334,14 @@
         cursor.scrollIntoView({ behavior: 'smooth', block: 'end' });
         setTimeout(typeChar, CHAR_DELAY + Math.random() * 18);
       } else {
-        // Line done — move to next
+        // Line done — trigger animation if marked
+        if (currentAnim && window.hackabeeAnimations) {
+          const initFn = { flame: window.hackabeeAnimations.initFlame,
+                           hills: window.hackabeeAnimations.initHills,
+                           menorah: window.hackabeeAnimations.initMenorah }[currentAnim];
+          if (initFn) initFn(currentEl);
+          currentAnim = null;
+        }
         setTimeout(nextLine, LINE_PAUSE + (LINES[lineIndex - 1]?.delay ?? 0));
       }
     }
@@ -317,7 +353,7 @@
         return;
       }
 
-      const { text, cls, delay } = LINES[lineIndex];
+      const { text, cls, delay, anim } = LINES[lineIndex];
       lineIndex++;
 
       if (text === '') {
@@ -329,15 +365,22 @@
       currentEl   = createLine(cls);
       currentText = text;
       charIndex   = 0;
+      currentAnim = anim || null;
 
       setTimeout(typeChar, delay ?? 0);
     }
 
     if (DEV_MODE) {
       // Instant render — no animation
-      LINES.forEach(({ text, cls }) => {
+      LINES.forEach(({ text, cls, anim }) => {
         const el = createLine(cls);
         el.textContent = text;
+        if (anim && window.hackabeeAnimations) {
+          const initFn = { flame: window.hackabeeAnimations.initFlame,
+                           hills: window.hackabeeAnimations.initHills,
+                           menorah: window.hackabeeAnimations.initMenorah }[anim];
+          if (initFn) initFn(el);
+        }
       });
       cursor.style.display = 'none';
     } else {
