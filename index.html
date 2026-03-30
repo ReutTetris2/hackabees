@@ -116,24 +116,28 @@
 
     .line.dim    { color: var(--green-dim); }
     .line.faint  { color: var(--green-faint); }
+    .line.amber  { color: var(--amber); }
     .line.hebrew {
       color: var(--amber);
-      font-size: 1.15em;
+      font-size: 1.2em;
       letter-spacing: 0.04em;
       direction: rtl;
       unicode-bidi: isolate;
     }
     .line.title {
-      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-size: clamp(2.8rem, 7vw, 4.8rem);
       color: var(--green);
-      text-shadow: 0 0 18px rgba(0, 255, 0, 0.6);
+      text-shadow: 0 0 28px rgba(0, 255, 0, 0.7), 0 0 60px rgba(0, 255, 0, 0.2);
       line-height: 1.2;
+      letter-spacing: 0.04em;
     }
     .line.section {
-      color: var(--green);
+      color: var(--green-dim);
       border-bottom: 1px solid var(--green-faint);
       padding-bottom: 0.2rem;
-      margin-top: 0.4rem;
+      margin-top: 0.8rem;
+      font-size: 0.85em;
+      letter-spacing: 0.08em;
     }
     .line.blank { min-height: 1.6em; }
 
@@ -185,89 +189,103 @@
 
       { text: '─── WHO WE ARE ─────────────────────────────', cls: 'section', delay: 600 },
       { text: '',                         cls: 'blank',   delay: 0    },
-      { text: 'We are the priests of the digital age.',  cls: 'prompt', delay: 60 },
+      { text: 'The decree was specific.',  cls: 'prompt', delay: 60   },
+      { text: 'Eat the pig. Work the Sabbath.', cls: '',  delay: 50   },
+      { text: 'The son you just had — do not circumcise him.', cls: 'dim', delay: 50 },
       { text: '',                         cls: 'blank',   delay: 0    },
-      { text: 'They were not warriors — the ones we come from.',  cls: '', delay: 50 },
-      { text: 'They were priests. Keepers of the code.',   cls: '', delay: 50 },
-      { text: 'From Modi\'in — the periphery, not the center.', cls: 'dim', delay: 50 },
-      { text: 'Five brothers. One family. No army.',       cls: 'dim', delay: 50 },
-      { text: 'When an empire tried to overwrite their identity,', cls: '', delay: 50 },
-      { text: 'they took to the hills — and fought back.',  cls: '', delay: 50 },
-      { text: 'First sovereignty in four hundred years.',  cls: 'dim', delay: 60 },
+      { text: 'Most people calculated. Decided it wasn\'t worth it.', cls: 'dim', delay: 50 },
       { text: '',                         cls: 'blank',   delay: 0    },
-      { text: 'We are that.',             cls: 'prompt',  delay: 200  },
+      { text: 'At the altar in Modi\'in,',cls: '',        delay: 60   },
+      { text: 'an apostate stepped forward to sacrifice.',  cls: 'dim', delay: 50 },
+      { text: 'One man couldn\'t stand it.', cls: '',     delay: 60   },
+      { text: 'Killed him.',              cls: 'amber',   delay: 200  },
+      { text: 'Then killed the king\'s officer.',  cls: '', delay: 50  },
+      { text: 'Cried מי לה\' אלי — and ran to the hills.', cls: '', delay: 60 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'Not from Jerusalem. From Modi\'in.', cls: 'dim', delay: 50 },
+      { text: 'Priests, not generals. Five brothers. No army.', cls: '', delay: 50 },
+      { text: 'Four hundred years of silence.',  cls: 'dim', delay: 60 },
+      { text: 'They broke it.',           cls: 'amber',   delay: 300  },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'We are that refusal.',     cls: 'prompt',  delay: 300  },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: 'Hackers who do good.',     cls: '',        delay: 60   },
-      { text: 'Builders, not breakers.',  cls: '',        delay: 60   },
-      { text: 'We protect the code.',     cls: '',        delay: 60   },
-      { text: 'We carry the light.',      cls: '',        delay: 60   },
-      { text: 'We refuse to let the dominant system', cls: '', delay: 60 },
-      { text: 'overwrite who we are.',    cls: '',        delay: 60   },
+      { text: 'We refuse the dominant stack.',  cls: '',  delay: 60   },
+      { text: 'We carry the old light into the new dark.', cls: '', delay: 60 },
+      { text: 'Builders. Not breakers.',  cls: 'amber',   delay: 60   },
       { text: '',                         cls: 'blank',   delay: 0    },
 
       { text: '─── THE NAME ───────────────────────────────', cls: 'section', delay: 500 },
       { text: '',                         cls: 'blank',   delay: 0    },
-      { text: 'מכבי — the hammer.',   cls: 'prompt', delay: 60 },
-      { text: 'Also: an acronym for a battle cry —',      cls: '', delay: 50 },
-      { text: '"Mi kamocha ba\'elim?"',            cls: '', delay: 50 },
-      { text: '"Who is like you among the powers?"',      cls: '', delay: 50 },
+      { text: 'מכבי — the hammer.',       cls: 'prompt',  delay: 60   },
       { text: '',                         cls: 'blank',   delay: 0    },
-      { text: 'They charged empires screaming a question.', cls: 'dim', delay: 60 },
-      { text: 'So do we.',                cls: 'dim',     delay: 60   },
+      { text: 'Also an acronym. A battle cry borrowed', cls: '', delay: 50 },
+      { text: 'from the Song of the Sea —',  cls: '',     delay: 50   },
+      { text: 'מי כמוך באלים יהוה',       cls: 'hebrew',  delay: 80   },
+      { text: '"Who is like you among the powers?"', cls: 'dim', delay: 50 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'They charged Seleucid armies', cls: 'dim', delay: 60   },
+      { text: 'screaming a quote from the Exodus.', cls: 'dim', delay: 60 },
+      { text: 'They knew exactly what they were continuing.', cls: 'dim', delay: 60 },
+      { text: 'So do we.',                cls: 'amber',   delay: 200  },
       { text: '',                         cls: 'blank',   delay: 0    },
 
       { text: '─── THE FLAME ──────────────────────────────', cls: 'section', delay: 500 },
       { text: '',                         cls: 'blank',   delay: 0    },
-      { text: 'When they reclaimed the Temple,', cls: 'prompt', delay: 60 },
-      { text: 'they found one cruse of uncontaminated oil.', cls: '', delay: 50 },
-      { text: 'Enough for one day.',      cls: '',        delay: 50   },
-      { text: 'It burned for eight.',     cls: '',        delay: 50   },
+      { text: 'The Temple had been made into something else.', cls: 'prompt', delay: 60 },
+      { text: 'The altar — used for other gods.',  cls: 'dim', delay: 50 },
+      { text: 'The daily flame — put out.',        cls: 'dim', delay: 50 },
       { text: '',                         cls: 'blank',   delay: 0    },
-      { text: 'The hidden essence.',       cls: 'dim',    delay: 60   },
-      { text: 'The thing that was not corrupted.', cls: 'dim', delay: 60 },
-      { text: 'Built to outlast its own resources.', cls: 'dim', delay: 60 },
+      { text: 'When they returned, one cruse.',    cls: '', delay: 60  },
+      { text: 'Sealed. The priest\'s stamp still intact.', cls: '', delay: 50 },
+      { text: 'The only thing the empire hadn\'t gotten to.', cls: 'dim', delay: 50 },
+      { text: '',                         cls: 'blank',   delay: 0    },
+      { text: 'Enough for one day.',      cls: '',        delay: 60   },
+      { text: 'It burned for eight.',     cls: 'amber',   delay: 300  },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: 'We build like that.',      cls: 'prompt',  delay: 200  },
       { text: '',                         cls: 'blank',   delay: 0    },
 
       { text: '─── THE WOMEN ──────────────────────────────', cls: 'section', delay: 500 },
       { text: '',                         cls: 'blank',   delay: 0    },
-      { text: 'The story is never only the brothers.',  cls: 'prompt', delay: 60 },
+      { text: 'The story is never only the brothers.', cls: 'prompt', delay: 60 },
       { text: '',                         cls: 'blank',   delay: 0    },
-      { text: 'Channah bat Mattathias —',  cls: '',        delay: 60   },
-      { text: 'stood up at her own wedding',  cls: 'dim', delay: 50   },
-      { text: 'and named the wrong when everyone',  cls: 'dim', delay: 50 },
-      { text: 'was pretending it wasn\'t happening.', cls: 'dim', delay: 50 },
-      { text: 'Her brothers didn\'t move until she did.', cls: '', delay: 60 },
+      { text: 'Channah bat Mattathias —', cls: '',        delay: 60   },
+      { text: 'It was her wedding day.',  cls: 'dim',     delay: 50   },
+      { text: 'The governor\'s claim stood in the room.', cls: 'dim', delay: 50 },
+      { text: 'No one moved.',           cls: '',        delay: 200  },
+      { text: 'She stood up and said to her brothers:', cls: 'dim', delay: 60 },
+      { text: '"You killed a whole city for Dinah.', cls: '', delay: 60 },
+      { text: ' What are you waiting for?"', cls: 'amber', delay: 60 },
+      { text: 'They moved.',             cls: '',        delay: 300  },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: 'Judith —',                 cls: '',        delay: 60   },
-      { text: 'ran an intelligence operation',  cls: 'dim', delay: 50  },
-      { text: 'disguised as a dinner.',   cls: 'dim',     delay: 50   },
-      { text: 'Wine until he slept. One sword.',  cls: '', delay: 60   },
-      { text: 'The army dissolved at dawn.',     cls: '', delay: 60   },
-      { text: '(The salty cheese tradition — also hers.)',  cls: 'dim', delay: 60 },
+      { text: 'ran an intelligence operation disguised as a dinner.', cls: 'dim', delay: 50 },
+      { text: 'Wine until he slept. One sword.',  cls: '', delay: 60  },
+      { text: 'The army dissolved at dawn.',      cls: '', delay: 60  },
+      { text: '(The salty cheese tradition — also hers.)', cls: 'dim', delay: 60 },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: 'Shlomtzion —',             cls: '',        delay: 60   },
       { text: 'the only queen who ruled in her own name.', cls: 'dim', delay: 50 },
-      { text: 'While the men fought over what to do with power,', cls: 'dim', delay: 50 },
-      { text: 'she held it.',             cls: '',        delay: 60   },
+      { text: 'While the men fought over the crown,', cls: 'dim', delay: 50 },
+      { text: 'she simply wore it.',      cls: '',        delay: 60   },
       { text: 'She backed the Pharisees — keepers of the oral law.', cls: '', delay: 60 },
-      { text: 'The tradition she protected outlasted the dynasty.', cls: 'dim', delay: 60 },
+      { text: 'That tradition outlasted the dynasty.', cls: 'dim', delay: 60 },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: 'Hannah, mother of seven —', cls: '',       delay: 60   },
-      { text: 'watched each son refuse.',  cls: 'dim',    delay: 50   },
-      { text: 'Refused herself.',          cls: 'dim',    delay: 50   },
-      { text: '"Abraham bound one altar.',  cls: '',       delay: 60   },
-      { text: ' I have bound seven."',     cls: '',       delay: 60   },
+      { text: 'watched each son refuse.', cls: 'dim',     delay: 50   },
+      { text: 'Refused herself.',         cls: 'dim',     delay: 50   },
+      { text: '"Abraham bound one altar.', cls: '',       delay: 60   },
+      { text: ' I have bound seven."',    cls: 'amber',   delay: 60   },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: 'We build like that too.',  cls: 'prompt',  delay: 200  },
       { text: '',                         cls: 'blank',   delay: 0    },
 
       { text: '─── SYSTEM STATUS ─────────────────────────', cls: 'section', delay: 600 },
       { text: '',                         cls: 'blank',   delay: 0    },
-      { text: 'flame............... BURNING', cls: '', delay: 80 },
-      { text: 'identity............ INTACT',  cls: '', delay: 80 },
-      { text: 'empire.............. PENDING', cls: 'dim', delay: 80 },
+      { text: 'flame............... BURNING', cls: 'amber', delay: 80 },
+      { text: 'identity............ INTACT',  cls: '',     delay: 80  },
+      { text: 'empire.............. PENDING', cls: 'dim',  delay: 80  },
       { text: '',                         cls: 'blank',   delay: 0    },
       { text: '> _',                      cls: 'faint',   delay: 400  },
     ];
@@ -277,9 +295,10 @@
     const cursor   = document.getElementById('cursor');
 
     // Typing speed per character (ms)
-    const CHAR_DELAY = 28;
+    const DEV_MODE = location.search.includes('instant');
+    const CHAR_DELAY = DEV_MODE ? 0 : 28;
     // Extra pause between lines (ms)
-    const LINE_PAUSE = 90;
+    const LINE_PAUSE = DEV_MODE ? 0 : 90;
 
     let lineIndex = 0;
     let charIndex = 0;
@@ -331,8 +350,17 @@
       setTimeout(typeChar, delay ?? 0);
     }
 
-    // Start after short boot pause
-    setTimeout(nextLine, 800);
+    if (DEV_MODE) {
+      // Instant render — no animation
+      LINES.forEach(({ text, cls }) => {
+        const el = createLine(cls);
+        el.textContent = text;
+      });
+      cursor.style.display = 'none';
+    } else {
+      // Start after short boot pause
+      setTimeout(nextLine, 800);
+    }
 
     // ─── Easter egg: ASCII mouse ──────────────────────────────────────────────
     const canvas = document.getElementById('mouse-canvas');
